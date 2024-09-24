@@ -29,9 +29,9 @@ const colorList = {
  * @param {string} children 按鈕文字
  * @param {string} color 按鈕色系
  * @param {string} size 按鈕大小 (optional)
- * @param {bool} pill 膠囊款式 (optional)
- * @param {bool} icon 圓形款式 (optional)
- * @param {bool} outline 外框款式 (optional)
+ * @param {boolean} pill 膠囊款式 (optional)
+ * @param {boolean} icon 圓形款式 (optional)
+ * @param {boolean} outline 外框款式 (optional)
  * @param {string} href 連結路徑 (optional)
  * @param {string} title 提示文字 (optional)
  * @param {string} className 客製化樣式名稱 (optional)
