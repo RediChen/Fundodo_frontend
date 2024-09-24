@@ -21,6 +21,8 @@ import {
 import { RiSparkling2Line } from "react-icons/ri";
 import FddBtn from '@/components/buttons/fddBtn';
 import useTimeout from '@/hooks/use-setTimeout';
+import Link from 'next/link';
+import Modal from '@/components/common/modal';
 
 export default function CouponPage() {
   //*============================ 初始渲染
@@ -116,7 +118,18 @@ export default function CouponPage() {
     setData2show(cpPkg.usableArr);
   }, [cpPkg]);
 
-  //*============================顯示切換
+  //*============================ Modal
+  const modalInitConfig = {
+    isOpen: false,
+    style: 1,
+    title: "",
+    text: ""
+  };
+  const [modalConfig, setModalConfig] = useState(modalInitConfig);
+
+  const switchModal = (code) => setModalConfig({ ...modalConfig, isOpen: !!code });
+
+  //*============================ 顯示切換
   /** ICON */
   const iconList = [
     <RiSparkling2Line />,
@@ -189,16 +202,15 @@ export default function CouponPage() {
   //*============================ 領取優惠券
 
   const [claimCode, setClaimcode] = useState('');
-  const [claimMsg, setClaimMsg] = useState('');
-
-  // const handleClaimMsg = message => {
-  //   setClaimMsg(message);
-  //   useTimeout(() => setClaimMsg(''), 5000);
-  // };
 
   const handleClaim = () => {
     if (claimCode.length === 0)
-      return setClaimMsg('請輸入領取碼');
+      return setModalConfig({
+        isOpen: true,
+        style: 2,
+        title: '唉呀！您好像忘記輸入了',
+        text: '請先輸入領取碼，再點選「領取優惠」'
+      });
 
     if (isNaN(uID) || uID <= 0)
       return console.error('登入狀態異常，請重新登入');
@@ -209,7 +221,12 @@ export default function CouponPage() {
         claimCode.length < 8,
         !claimCode.startsWith('fdd')
       ].some(v => v))
-      return setClaimMsg('查無此張優惠券');
+      return setModalConfig({
+        isOpen: true,
+        style: 2,
+        title: '查無此張優惠券',
+        text: '請確認您輸入的優惠券是否正確，並確保英文的大小寫也正確'
+      });
 
     const pkg = {
       user_id: uID,
@@ -217,17 +234,35 @@ export default function CouponPage() {
     }
     axios.post(`${apiBaseUrl}/coupon/claim`, pkg)
       .then(res => {
-        if (res.data.result === true) readCpData();
-        setClaimMsg(res.data.message);
+        if (res.data.result === true) {
+          readCpData();
+          setActiveIndex(0);
+        }
+        setModalConfig({
+          isOpen: true,
+          style: res.data.result ? 1 : 2,
+          title: res.data.result ? '太棒了！' : '唉呀',
+          text: res.data.message
+        });
       })
       .catch(err => {
         if (err.response) {
           //status != 2XX
-          setClaimMsg(err.response.data.message);
+          setModalConfig({
+            isOpen: true,
+            style: 2,
+            title: '怪怪的',
+            text: err.response.data.message
+          });
           console.error(err.response.data.message);
         } else if (err.request) {
           // 伺服器沒有回應
-          console.log("伺服器沒有回應，請檢查伺服器狀態");
+          setModalConfig({
+            isOpen: true,
+            style: 2,
+            title: '伺服器異常',
+            text: '伺服器好像怪怪的，請稍後再嘗試，或是聯絡我們。'
+          });
         } else {
           console.log("未知的錯誤情形");
           console.log(err);
@@ -235,14 +270,21 @@ export default function CouponPage() {
       });
   }
 
-
   return (
     <>
       <Head><title>我的優惠券 | Fundodo</title></Head>
-      <div className='bg-tint5' onClick={() => setClaimMsg('')}>
+      <div className='bg-tint5'>
         <div className='container'>
           <div className="row">
-            <div className="col-12"><span>Home &gt; 會員中心 &gt; 我的優惠券</span></div>
+            <div className="col-12">
+              <div className='my-2 hstack jc-start gap-2'>
+                <Link href='/'>Home</Link>
+                <span>&gt;</span>
+                <Link href='/member/peopleInfoData'>會員中心</Link>
+                <span>&gt;</span>
+                <span>我的優惠券</span>
+              </div>
+            </div>
             <div className="col-12">
               <div className="row">
                 <div className="col-10">
@@ -256,7 +298,6 @@ export default function CouponPage() {
                         onChange={e => setClaimcode(e.target.value)}
                       />
                       <FddBtn color='primary' pill={false} callback={() => handleClaim()}>領取優惠</FddBtn>
-                      <p className='ps-3 tx-error'>{claimMsg}</p>
                     </div>
                     {/* 分頁按鈕 */}
                     <div className={s.tabBox}>
@@ -317,6 +358,15 @@ export default function CouponPage() {
           </div>
         </div>
       </div>
+      <Modal
+        mode={1}
+        active={modalConfig.isOpen}
+        style={modalConfig.style}
+        onClose={() => switchModal(0)}
+      >
+        <h4>{modalConfig.title}</h4>
+        <p>{modalConfig.text}</p>
+      </Modal>
     </>
   )
 }
