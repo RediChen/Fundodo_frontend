@@ -37,7 +37,23 @@ export default function galleryModal() {
                     <FaUpRightFromSquare />
                   </IconContext.Provider>
                 </FddBtn>
-                <p>mode = 1</p>
+                <p>mode = 1, style = 1</p>
+              </div>
+              <div className="col">
+                <FddBtn color="primary" outline icon callback={() => setModalState(gene(1))}>
+                  <IconContext.Provider value={{ size: '2.5rem' }}>
+                    <FaUpRightFromSquare />
+                  </IconContext.Provider>
+                </FddBtn>
+                <p>mode = 1, style = 2</p>
+              </div>
+              <div className="col">
+                <FddBtn color="primary" outline icon callback={() => setModalState(gene(2))}>
+                  <IconContext.Provider value={{ size: '2.5rem' }}>
+                    <FaUpRightFromSquare />
+                  </IconContext.Provider>
+                </FddBtn>
+                <p>mode = 1, style = 3</p>
               </div>
               <div className="col">
                 <FddBtn color="primary" outline icon callback={() => setModalState(gene(3))}>
@@ -45,7 +61,7 @@ export default function galleryModal() {
                     <FaUpRightFromSquare />
                   </IconContext.Provider>
                 </FddBtn>
-                <p>mode = 2</p>
+                <p>mode = 2, style = 1</p>
               </div>
             </div>
 
@@ -56,6 +72,24 @@ export default function galleryModal() {
       <Modal
         mode={1}
         active={modalState[0]}
+        onClose={() => setModalState(initState)}
+      >
+        <h1>確認成功！</h1>
+        <span>拉不拉多拉不拉多拉布拉布拉布拉布拉布拉布拉布拉不拉多拉布拉布拉布拉布拉布拉布拉不拉多拉布拉布拉布拉布拉布拉不拉多拉布拉布拉布拉布拉不拉多拉布拉布拉布拉</span>
+      </Modal>
+      <Modal
+        mode={1}
+        style={2}
+        active={modalState[1]}
+        onClose={() => setModalState(initState)}
+      >
+        <h1>確認失敗！</h1>
+        <span>拉不拉多拉不拉多拉布拉布拉布拉布拉布拉布拉布拉不拉多拉布拉布拉布拉布拉布拉布拉不拉多拉布拉布拉布拉布拉布拉不拉多拉布拉布拉布拉布拉不拉多拉布拉布拉布拉</span>
+      </Modal>
+      <Modal
+        mode={1}
+        style={3}
+        active={modalState[2]}
         onClose={() => setModalState(initState)}
       >
         <h1>確認成功！</h1>

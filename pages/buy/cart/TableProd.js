@@ -45,18 +45,28 @@ export default function ProdCartTable({
   }, [data]);
 
   //===== 計算 PD 購物車小計
-  useEffect(() => {
-    if (noData) return;
-
+  const updateTotal = (stateArr = itemStateArr) => {
     const subtotList = qtyArr.map((q, i) => q * data[i].price);
     const total = subtotList.reduce((total, cur, i_item) => {
-      if (itemStateArr[CART_INDEX][i_item]) return total + cur;
+      if (stateArr[CART_INDEX][i_item]) return total + cur;
       return total;
     }, 0);
     setSubtotArr(subtotList);
     setAmount(arr => arr.map((v, i) => (i === CART_INDEX) ? total : v));
+  }
+
+  useEffect(() => {
+    if (noData) return;
+
+    updateTotal();
   }, [qtyArr, itemStateArr]);
 
+  /**
+   * 更新前台與後台之購物車商品數量
+   * @param {number} i_item 商品類購物車中之 index
+   * @param {number} cartID 
+   * @param {number} delta 增減的數量
+   */
   const handleQty = async (i_item, cartID, delta) => {
     // 更新前端的監控數據
     setQtyArr(qtyArr.map((q, j) => j === i_item ? q + delta : q));
@@ -123,6 +133,7 @@ export default function ProdCartTable({
     setItemStateArr(prev => prev.map(
       (arr, i_cart) => (i_cart === CART_INDEX) ? new_arr : arr)
     );
+    updateTotal(new_arr);
     // 更新後台的資料庫
     deleteCartOf(db_id);
   }
@@ -131,14 +142,14 @@ export default function ProdCartTable({
     <>
       {w__screen >= breakpoints.md ? (
         <article className='my-5'>
-          <caption className='d-flex flex-row jc-between ai-center bg-tint5'>
+          <header className='d-flex flex-row jc-between ai-center bg-tint5'>
             <span className='tx-default tx-shade4 ps-2 ps-lg-4'>
               共 {itemStateArr[CART_INDEX].filter(v => v).length} 件商品
             </span>
             <FddBtn color='tint5' pill={false} size='sm' href='/prod'>
               再逛一下商城
             </FddBtn>
-          </caption>
+          </header>
           <table className={s.cartTable}>
             <thead>
               <tr>

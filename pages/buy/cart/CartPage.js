@@ -347,7 +347,6 @@ export default function CartPage({
     }
 
     let result_discount = cut;
-    console.log(result_discount);
     if (max_discount)
       result_discount = max_discount > 0 ? Math.min(cut, max_discount) : cut;
 
@@ -497,6 +496,9 @@ export default function CartPage({
       (indicator, currentArr) => indicator || currentArr.some(v => v),
       false);
 
+  /** 是否毫無優惠券可用 */
+  const noCoupon = !cpList || cpList.length === 0 || cpState.every(s => s < 0);
+
   return (
     <>
       <Head>
@@ -526,7 +528,15 @@ export default function CartPage({
                     {cpList && cpList.length > 0
                       ? "所有可使用的優惠券"
                       : "沒有可使用的優惠券"}</h3>
-                  <FddBtn color='tint3' size='sm' callback={() => { activateAllCp() }}>一鍵使用全部</FddBtn>
+                  <FddBtn
+                    color={noCoupon ? 'muted' : 'tint3'}
+                    size='sm'
+                    title='一鍵使用全部'
+                    disabled={noCoupon}
+                    callback={() => { activateAllCp() }}
+                  >
+                    一鍵使用全部
+                  </FddBtn>
                   <FddBtn color='tint3' size='sm' href='/member/coupon'>查看我的優惠券</FddBtn>
                 </div>
                 <div className="hstack flex-wrap gap-1 jc-between">
