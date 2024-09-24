@@ -33,9 +33,9 @@ export default function CrsCartTable({
     setW__screen(screenWidth);
   }, [screenWidth]);
 
-  const recomputeAmount = () => {
+  const recomputeAmount = (stateArr = itemStateArr[CART_INDEX]) => {
     const total = data.reduce((sum, cur, i) => {
-      if (itemStateArr[CART_INDEX][i])
+      if (stateArr[i])
         return sum + cur.price;
       else
         return sum
@@ -56,6 +56,8 @@ export default function CrsCartTable({
     setItemStateArr(prev => prev.map(
       (arr, i_cart) => (i_cart === CART_INDEX) ? new_arr : arr)
     );
+    // 更新 totals
+    recomputeAmount(new_arr);
     // 更新後台的資料庫
     deleteCartOf(db_id);
   }

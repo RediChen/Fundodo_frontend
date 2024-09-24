@@ -39,9 +39,9 @@ export default function HotelCartTable({
     setW__screen(screenWidth);
   }, [screenWidth]);
 
-  const recomputeAmount = () => {
+  const recomputeAmount = (stateArr = itemStateArr[CART_INDEX]) => {
     const total = data.reduce((sum, cur, i) => {
-      if (itemStateArr[CART_INDEX][i])
+      if (stateArr[i])
         return sum + cur.amount;
       else
         return sum
@@ -54,12 +54,6 @@ export default function HotelCartTable({
     if (data) recomputeAmount();
   }, [data, itemStateArr]);
 
-  const [itemstateSenser, setItemstateSenser] = useState(666);
-
-  useEffect(() => {
-    console.log('有嗎');
-    recomputeAmount();
-  }, [itemstateSenser])
 
   /** 刪除購物車資料 */
   const handleDelete = (i_item, db_id) => {
@@ -70,7 +64,8 @@ export default function HotelCartTable({
     setItemStateArr(prev => prev.map(
       (arr, i_cart) => (i_cart === CART_INDEX) ? new_arr : arr)
     );
-    setItemstateSenser(prev => prev + 1);
+    // 更新 totals
+    recomputeAmount(new_arr);
     // 更新後台的資料庫
     deleteCartOf(db_id);
   }
