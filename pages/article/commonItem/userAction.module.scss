@@ -7,11 +7,11 @@
   justify-content: space-between;
 }
 
-.dflex {
-  display: flex;
-}
-
 .listSelect {
+  // margin-left: auto;
+  //   border: 0;
+  //   background: #f1edeb;
+
   display: flex;
   width: 116px;
   padding: 6px 14px;
@@ -20,69 +20,38 @@
   border-radius: 50px;
   border: 1px solid $primary;
   color: $primary;
-  background: #FFF;
+  background-color: $white;
 }
 
 .searchBar {
-  display: flex;
-  width: 227px;
+  // display: flex;
+  // width: 227px;
   padding: 6px 14px;
-  align-items: center;
-  gap: 66px;
-  border-radius: 50px;
+  // align-items: center;
+  // gap: 66px;
+  border-radius: 50rem;
   border: 1px solid $primary;
-  background: #FFF;
+  background-color: $white;
 }
 
-.rwdOption{
-  display: none;
-}
-
-.rwdCreate{
-  display: none;
+.rwdCreate {
   border: 1px solid $primary;
   padding: 5px 10px;
   align-items: center;
   border-radius: 5px;
-  background: #FFF;
+  background-color: $white;
   width: 116px;
   text-align: center;
-}
-.search{
-  display: flex;
+
+  @include rwd-above('xl') {
+    display: none;
+  }
 }
 
-.searchBtn{
+.searchBtn {
   display: flex;
   border: 0;
   font-size: 26px;
   align-items: center;
   cursor: pointer;
-}
-@media (max-width: 1440px){
-  .rwdCreate{
-    display: block;
-  }
-}
-@media (max-width: 768px) {
-  .userAction h4{
-    display: none;
-  }
-  .dflex{
-    flex-direction: column;
-    width: 100%;
-  }
-  .listSelect{
-    margin-left: auto;
-    border: 0;
-    background: #f1edeb;
-  }
-  .searchBar{
-    width: 100%;
-    margin-top: 13px;
-    margin-bottom: 20px;
-  }
-  .rwdOption{
-    display: block;
-  }
 }

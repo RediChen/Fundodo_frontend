@@ -1,9 +1,9 @@
-import {useState,useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import scss from '@/pages/article/commonItem/aside.module.scss'
 import AsideArticle from './asideArticle'
 
 export default function ArtiAside() {
-  const [articles,setArticles]=useState([])
+  const [articles, setArticles] = useState([])
   const [randomArticles, setRandomArticles] = useState([]);
 
   useEffect(() => {
@@ -31,20 +31,23 @@ export default function ArtiAside() {
   }, [articles]);
 
   return (
-    <>
-      <aside className={[scss.leftSide].join()}>
-        <div>
-          <div className={scss.leftTitle}>最新文章</div>
-          {articles.slice(0,5).map(arti => (
-            <AsideArticle key={arti.id} article={arti} />
-          ))}
-
-          <div className={scss.leftTitle} style={{ background: '#71C4EF', marginTop: '30px' }}>熱門文章</div>
-          {randomArticles.map(arti => (
-            <AsideArticle key={arti.id} article={arti} />
-          ))}
-        </div>
-      </aside>
-    </>
+    <aside className='d-flex flex-row flex-md-col gap-4'>
+      <div>
+        <h4 className={['bg-primary tx-default mb-4', scss.asideTitle].join(' ')}>最新文章</h4>
+        {articles.slice(0, 5).map(arti => (
+          <AsideArticle key={arti.id} article={arti} />
+        ))}
+      </div>
+      <div>
+        <h4
+          className={['bg-info tx-default mb-4', scss.asideTitle].join(' ')}
+        >
+          熱門文章
+        </h4>
+        {randomArticles.map(arti => (
+          <AsideArticle key={arti.id} article={arti} />
+        ))}
+      </div>
+    </aside>
   );
 }

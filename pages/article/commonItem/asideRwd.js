@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
-import scss from '@/pages/article/commonItem/asideRwd.module.scss';
+import { apiBaseUrl } from '@/configs';
+import { useRef, useEffect, useState } from 'react';
 import AsideArticle from './asideArticle';
+import scss from '@/pages/article/commonItem/asideRwd.module.scss';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io"
 
 export default function ArtiAside() {
@@ -10,7 +11,7 @@ export default function ArtiAside() {
 
   useEffect(() => {
     const fetchArticles = async () => {
-      const url = 'http://localhost:3005/api/article/articles'
+      const url = `${apiBaseUrl}/article/articles`
 
       try {
         const response = await fetch(url)
@@ -54,14 +55,14 @@ export default function ArtiAside() {
   }
   return (
     <>
-      <aside className={[scss.leftSide].join()}>
+      <aside className={[scss.leftSide].join(' ')}>
         <div className={scss.asideContainer}>
-          <div className={scss.asideSection}>
+          <section className={scss.asideSection}>
             <div className={scss.leftTitle}>最新文章</div>
             <button className={scss.backBtn} onClick={scrollRightNew}>
               <IoIosArrowBack />
             </button>
-            <div className={scss.articleList} ref={scrollArticleNew}>
+            <div className={scss.listWindow} ref={scrollArticleNew}>
               {articles.slice(0, 5).map(arti => (
                 <AsideArticle key={arti.id} article={arti} />
               ))}
@@ -69,14 +70,14 @@ export default function ArtiAside() {
             <button className={scss.moreBtn} onClick={scrollLeftNew}>
               <IoIosArrowForward />
             </button>
+          </section>
 
-          </div>
-          <div className={scss.asideSection}>
+          <section className={scss.asideSection}>
             <div className={scss.leftTitle} style={{ background: '#71C4EF' }}>熱門文章</div>
             <button className={scss.backBtn} onClick={scrollRightHot}>
               <IoIosArrowBack />
             </button>
-            <div className={scss.articleList} ref={scrollArticleHot}>
+            <div className={scss.listWindow} ref={scrollArticleHot}>
               {randomArticles.map(arti => (
                 <AsideArticle key={arti.id} article={arti} />
               ))}
@@ -84,7 +85,7 @@ export default function ArtiAside() {
             <button className={scss.moreBtn} onClick={scrollLeftHot}>
               <IoIosArrowForward />
             </button>
-          </div>
+          </section>
         </div>
       </aside>
     </>

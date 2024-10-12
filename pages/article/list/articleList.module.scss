@@ -1,18 +1,18 @@
 @import '@/styles';
 
 .articleList {
-  margin-top: 39px;
+  //todo: remove and move to elsewhere
   margin-left: 58px;
 }
 
-.pageChange{
+.pageChange {
   display: flex;
   justify-content: center;
   margin-top: 30px;
 }
 
 @media (max-width: 768px) {
-  .articleList{
+  .articleList {
     width: 100%;
     margin: 0;
   }

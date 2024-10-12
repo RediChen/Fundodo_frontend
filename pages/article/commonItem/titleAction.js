@@ -27,23 +27,19 @@ export default function TitleAction() {
       }).catch(error => console.log(error.message))
   }, [])
   return (
-    <>
-      <div className={[scss.titleAction].join()}>
-        <div className={[scss.btnList].join()}>
-          <button className={scss.backBtn} onClick={scrollRight}>
-            <IoIosArrowBack />
-          </button>
-          <div className={[scss.sortList].join()} ref={scrollSort}>
-            <Link className={[scss.sortBtn].join()} href='/article'>全部分類</Link>
-            {sort.map(sortitem => (
-              <Link key={sortitem.id} className={[scss.sortBtn].join()} href={`/article?sort=${sortitem.id}`}>{sortitem.sort}</Link>)
-              )}
-          </div>
-          <button className={scss.moreBtn} onClick={scrollLeft}>
-            <IoIosArrowForward />
-          </button>
-        </div>
+    <div className={scss.btnList}>
+      <button className={scss.backBtn} onClick={scrollRight}>
+        <IoIosArrowBack />
+      </button>
+      <div className={scss.sortList} ref={scrollSort}>
+        <Link className={scss.sortBtn} href='/article'>全部分類</Link>
+        {sort.map(sortitem => (
+          <Link key={sortitem.id} className={scss.sortBtn} href={`/article?sort=${sortitem.id}`}>{sortitem.sort}</Link>)
+        )}
       </div>
-    </>
+      <button className={scss.moreBtn} onClick={scrollLeft}>
+        <IoIosArrowForward />
+      </button>
+    </div>
   );
 }
