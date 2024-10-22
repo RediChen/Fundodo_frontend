@@ -31,7 +31,7 @@
   display: flex;
   padding: 3% 5%;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   position: relative;
   .area1 {
     padding-bottom: 32px;
@@ -219,7 +219,7 @@
   }
   .area3 {
     display: flex;
-    justify-content: row;
+    // justify-content: row;
     justify-content: space-around;
     gap: 3rem;
     white-space: nowrap;
@@ -239,9 +239,9 @@
     }
   }
   .area3 p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
 
     color: $shade4;
     font-family: 'Noto Sans';

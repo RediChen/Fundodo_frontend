@@ -15,7 +15,7 @@ export default function FavoriteProd() {
 
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
-      if (loading) return; 
+      if (loading) return;
 
       if (!user) {
         setError('請先登入');
@@ -69,8 +69,8 @@ export default function FavoriteProd() {
           <div className={[scss.bg, 'col-lg-9 row'].join(' ')}>
             {favoriteProducts.length === 0 ? (
               <>
-                  <div className={[scss.pet, 'd-flex jc-center mb-3'].join(' ')}>我什麼都不喜歡</div>
-                    <Image src={doggy} width={500} />
+                <div className={[scss.pet, 'd-flex jc-center mb-3'].join(' ')}>我什麼都不喜歡</div>
+                <Image src={doggy} width={500} />
               </>
             ) : (
               favoriteProducts.map((product) => (
@@ -83,7 +83,7 @@ export default function FavoriteProd() {
                           alt={product.product_name}
                           width={100}
                           height={100}
-                          layout="responsive"
+
                         />
                       </div>
                     </div>

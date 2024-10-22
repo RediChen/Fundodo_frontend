@@ -34,28 +34,28 @@ export default function ProdSec() {
 
   return (
     <section className={scss.bgWrapper}>
-  <div className={scss.bg} style={{ '--bg-image': `url(${PdBg.src})` }}>
-    <div className="container">
-      <div className={scss.prodSec}>
-        <div className={scss.prodImgs}>
-          {[feed1, feed2, feed3, feed4].map((feed, index) => (
-            <div key={index} className={['img-wrap-w100', scss.imgBox].join(' ')}>
-              <Image src={feed} alt="" layout="responsive" width={276} height={251} />
+      <div className={scss.bg} style={{ '--bg-image': `url(${PdBg.src})` }}>
+        <div className="container">
+          <div className={scss.prodSec}>
+            <div className={scss.prodImgs}>
+              {[feed1, feed2, feed3, feed4].map((feed, index) => (
+                <div key={index} className={['img-wrap-w100', scss.imgBox].join(' ')}>
+                  <Image src={feed} alt="" width={276} height={251} />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <div
-          ref={prodTextRef}
-          className={`${scss.prodText} ${isVisible ? scss.animate : ''}`}
-        >
-          <h3>狗狗的全部需求，一站式解決</h3>
-          <FddBtn color='primary' href='/prod' className={scss.proBtn}>
-            立即逛逛 <FaArrowRight />
-          </FddBtn>
+            <div
+              ref={prodTextRef}
+              className={`${scss.prodText} ${isVisible ? scss.animate : ''}`}
+            >
+              <h3>狗狗的全部需求，一站式解決</h3>
+              <FddBtn color='primary' href='/prod' className={scss.proBtn}>
+                立即逛逛 <FaArrowRight />
+              </FddBtn>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
   );
 }

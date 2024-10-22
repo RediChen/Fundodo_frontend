@@ -36,7 +36,7 @@ export default function Recommend({ currentProductId, currentProductCategory }) 
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentPage((prevPage) => 
+      setCurrentPage((prevPage) =>
         (prevPage + 1) % Math.ceil(recommendedProducts.length / 2)
       )
     }, 5000)
@@ -52,8 +52,8 @@ export default function Recommend({ currentProductId, currentProductCategory }) 
     <div className={[scss.recommend].join(' ')}>
       <h3 className={scss.h3}>您可能也會喜歡</h3>
       <div className={scss.carouselContainer}>
-        <div 
-          className={scss.carouselTrack} 
+        <div
+          className={scss.carouselTrack}
           style={{ transform: `translateX(-${currentPage * 100}%)` }}
         >
           {recommendedProducts.map((product, index) => (
@@ -65,7 +65,7 @@ export default function Recommend({ currentProductId, currentProductCategory }) 
                     alt={product.name}
                     width={0}
                     height={0}
-                    layout="responsive"
+
                   />
                 </div>
                 <div className={scss.aside}>

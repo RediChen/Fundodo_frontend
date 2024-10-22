@@ -121,7 +121,7 @@ export default function RegisterPage() {
           console.error('優惠卷發送錯誤:', e);
           alert('優惠卷發送失敗');
         }
-        
+
         try {
           const url3 = `http://localhost:3005/api/member/addDog/${user_id}`;
           const dogData = {
@@ -169,7 +169,7 @@ export default function RegisterPage() {
       <form onSubmit={handleSubmit}>
         <div className={scss.RegisterContainer}>
           <div className={`${scss.lfpic} col-6`}>
-            <Image className="imgWrap" layout="responsive" src={lfpic} alt="Image" />
+            <Image className="imgWrap" src={lfpic} alt="Image" />
           </div>
           <div className={`${scss.rightText} col-6`}>
             <div className={`col-12`}>

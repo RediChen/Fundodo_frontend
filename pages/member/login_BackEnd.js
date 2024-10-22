@@ -73,7 +73,7 @@ export default function LoginBackEndPage() {
       <main className={scss.Loginmain}>
         <div className={scss.LoginContainer}>
           <div className={`${scss.lfpic} col-6`}>
-            <Image className="imgWrap" layout="responsive" src={lfpic} alt="Image" />
+            <Image className="imgWrap" src={lfpic} alt="Image" />
           </div>
           <div className={`${scss.rightText} col-6`}>
             <div className={`${scss.area1} col-12`}>
