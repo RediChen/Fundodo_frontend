@@ -48,6 +48,15 @@ export default function LoginPage() {
     setConfirmEmail(e.target.value);
   };
 
+  //*============================ Modal for login
+  const modalInitConfig = {
+    active: false,
+    style: 1,
+    title: "",
+    text: ""
+  };
+  const [loginModalConfig, setLoginModalConfig] = useState(modalInitConfig);
+
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -68,7 +77,13 @@ export default function LoginPage() {
       if (data.status === 'success' && data.token) {
         // console.log('登入成功，準備呼叫 login() 和 router.push()');
         login(data.token);
-        alert('登入成功');
+        // alert('登入成功');
+        // setLoginModalConfig({
+        //   active: true,
+        //   style: 1,
+        //   title: "登入成功",
+        //   text: ""
+        // })
         // console.log('登入函數已呼叫，準備重定向');
         const path2redir = (storedValue) || '/member/peopleInfoData';
         console.log(storedValue);
@@ -79,7 +94,13 @@ export default function LoginPage() {
           .catch((err) => console.error('導航失敗:', err));
       } else {
         setError(data.message || '登入失敗');
-        alert(`登入失敗:\n${data.message || '登入失敗'}`);
+        // alert(`登入失敗:\n${data.message || '登入失敗'}`);
+        setLoginModalConfig({
+          active: true,
+          style: 2,
+          title: "登入失敗",
+          text: ""
+        })
       }
     }).catch(error => {
       setError(error.message);
@@ -122,11 +143,11 @@ export default function LoginPage() {
       body: JSON.stringify({ token: credential }),
     })
       .then(response => {
-        console.log('API Response:', response);  // 這裡日誌輸出
+        console.log('API Response:', response);
         return response.json();
       })
       .then(data => {
-        console.log('API Data:', data);  // 這裡日誌輸出
+        console.log('API Data:', data);
         if (data.status === 'success' && data.data && data.data.accessToken) {
           localStorage.setItem('accessToken', data.data.accessToken);
           login(data.data.accessToken);
@@ -137,7 +158,7 @@ export default function LoginPage() {
         }
       })
       .catch(error => {
-        console.error('Fetch Error:', error);  // 這裡日誌輸出
+        console.error('Fetch Error:', error);
         alert(error.message || '登入失敗');
         setError(error.message || '登入失敗');
       });
@@ -207,28 +228,35 @@ export default function LoginPage() {
             </div>
           </div>
         </div>
-        {isModalOpen && (
-          <Modal
-            mode={1}
-            active={isModalOpen}
-            onClose={closeModal}
-            confirmText="發送 臨時密碼"
-            cancelText="取消"
-          >
-            <h4>忘記密碼</h4>
-            <p>請輸入你的電子信箱，我們將發送臨時密碼。</p>
-            <input
-              type="email"
-              value={confirmEmail}
-              onChange={handleEmailChange}
-              placeholder="輸入您的電子信箱"
-            />
-            <button onClick={sendOTP} disabled={!confirmEmail}>
-              發送
-            </button>
-            <button onClick={closeModal}>取消</button>
-          </Modal>
-        )}
+        <Modal
+          mode={1}
+          active={isModalOpen}
+          onClose={closeModal}
+          confirmText="發送 臨時密碼"
+          cancelText="取消"
+        >
+          <h4>忘記密碼</h4>
+          <p>請輸入你的電子信箱，我們將發送臨時密碼。</p>
+          <input
+            type="email"
+            value={confirmEmail}
+            onChange={handleEmailChange}
+            placeholder="輸入您的電子信箱"
+          />
+          <button onClick={sendOTP} disabled={!confirmEmail}>
+            發送
+          </button>
+          <button onClick={closeModal}>取消</button>
+        </Modal>
+        <Modal
+          mode={1}
+          active={loginModalConfig.active}
+          style={loginModalConfig.style}
+          onClose={() => switchModal(0)}
+        >
+          <h4>{loginModalConfig.title}</h4>
+          <p>{loginModalConfig.text}</p>
+        </Modal>
       </main>
     </>
   );

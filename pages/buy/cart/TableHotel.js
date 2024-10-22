@@ -7,6 +7,7 @@ import deleteCartOf from './doSoftDelete';
 //== Components ================================================================
 import FddBtn from '@/components/buttons/fddBtn';
 import Image from 'next/image';
+import Modal from '@/components/common/modal';
 //== Styles =================================================================
 import s from './cart-page.module.scss';
 import { TbTrashX } from "react-icons/tb";
@@ -54,7 +55,24 @@ export default function HotelCartTable({
     if (data) recomputeAmount();
   }, [data, itemStateArr]);
 
+  //*============================ Modal
+  const modalInitConfig = {
+    active: false,
+    // style: 1,
+    title: "",
+    text: "",
+    confirmText: "",
+    cancelText: "",
+    onConfirm: () => { }
+  };
+  const [modalConfig, setModalConfig] = useState(modalInitConfig);
 
+  /**
+   * 1 | open ; 0 | close
+   */
+  const resetModal = () => setModalConfig(modalInitConfig);
+
+  //*============================ 刪除購物車資料
   /** 刪除購物車資料 */
   const handleDelete = (i_item, db_id) => {
     // 更新前端的監控數據
@@ -96,7 +114,19 @@ export default function HotelCartTable({
               {noData || data.map((item, i_item) => itemStateArr[CART_INDEX][i_item] && (
                 <tr key={item.cart_id}>
                   <td>
-                    <FddBtn color='tint4' size='sm' icon callback={() => handleDelete(i_item, item.cart_id)}>
+                    <FddBtn color='tint4' size='sm'
+                      icon title="刪除此商品"
+                      callback={() => setModalConfig({
+                        active: true,
+                        title: "確定要刪除嗎？",
+                        text: "如果刪除訂房類的購物車項目，需要重新選擇房型與訂房日期哦",
+                        confirmText: "確定刪除",
+                        cancelText: "算了",
+                        onConfirm: () => {
+                          handleDelete(i_item, item.cart_id);
+                          resetModal();
+                        }
+                      })}>
                       <RxCross2 />
                     </FddBtn>
                   </td>
@@ -168,9 +198,23 @@ export default function HotelCartTable({
             {noData &&
               <div className='row py-5'>
                 <FddBtn color='tint1' size='sm' href='/prod'>來去逛逛寵物商城</FddBtn>
-              </div>}
+              </div>
+            }
           </div>
-        </>)}
+        </>
+      )}
+      <Modal
+        mode={2}
+        active={modalConfig.active}
+        confirmText={modalConfig.confirmText}
+        cancelText={modalConfig.cancelText}
+        onClose={() => resetModal()}
+        onCancel={() => resetModal()}
+        onConfirm={() => modalConfig.onConfirm()}
+      >
+        <h4>{modalConfig.title}</h4>
+        <p>{modalConfig.text}</p>
+      </Modal>
     </>
   )
 }

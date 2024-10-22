@@ -9,6 +9,7 @@ import useAuthRedirect from '@/hooks/useAuthRedirect';
 import DefaultLayout from '@/components/layout/default'
 import SideText from '@/components/member/SideText';
 import Head from 'next/head';
+import Modal from '@/components/common/modal';
 //== Styles =================================================================
 import s from './coupon.module.scss';
 import { BsCake2 } from "react-icons/bs";
@@ -22,7 +23,6 @@ import { RiSparkling2Line } from "react-icons/ri";
 import FddBtn from '@/components/buttons/fddBtn';
 import useTimeout from '@/hooks/use-setTimeout';
 import Link from 'next/link';
-import Modal from '@/components/common/modal';
 
 export default function CouponPage() {
   //*============================ 初始渲染
@@ -127,6 +127,11 @@ export default function CouponPage() {
   };
   const [modalConfig, setModalConfig] = useState(modalInitConfig);
 
+  /**
+   * 
+   * @param {boolean} code 
+   * @returns 
+   */
   const switchModal = (code) => setModalConfig({ ...modalConfig, isOpen: !!code });
 
   //*============================ 顯示切換
