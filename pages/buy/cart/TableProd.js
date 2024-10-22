@@ -169,6 +169,7 @@ export default function ProdCartTable({
                     <FddBtn
                       color='tint4'
                       size='sm' icon
+                      title="刪除此商品"
                       callback={() => handleDelete(i_item, item.cart_id)}
                     >
                       <RxCross2 />
